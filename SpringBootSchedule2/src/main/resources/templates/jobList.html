@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Task Management</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}"></link>
+</head>
+<body>
+	<h2>Task Management</h2>
+	<div th:unless="${#lists.isEmpty(jobs)}">
+		<table>
+			<thead>
+				<tr><td colspan="5">Task List</td></tr>
+				<tr>
+					<td>Task Name</td>
+					<td>State</td>
+					<td>Schedule</td>
+					<td>Next Run Date</td>
+					<td>Last Run Date</td>
+				</tr>
+			</thead>
+			<tbody>				
+				<tr th:each="job : ${jobs}">
+					<td th:text="${job.getJobName()}">Task Name</td>
+					<td th:switch="${job.getJobStatus()}">
+						<a class="stateHref" href="javascript:void(0)" th:case="1" th:rel="${job.jobId}">Enabled</a>
+						<a class="stateHref" href="javascript:void(0)" th:case="0" th:rel="${job.jobId}">Disabled</a>
+					</td>
+					<td>Schedule</td>
+					<td><a class="nextTimeHref" href="javascript:void(0)" th:text="${job.getNextTime()}" th:rel="${job.jobId}">Next Run Date</a></td>
+					<td th:text="${job.getPreviousTime()}">Last Run Date</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div th:if="${#lists.isEmpty(jobs)}">
+		<p>There is no job for now</p>
+	</div>
+	
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("body").on("click", ".stateHref", function() {
+				var jobId = $(this).attr("rel");
+				$(this).text($(this).text() == 'Enabled' ? 'Disabled' : 'Enabled');
+				var jobStatus = $(this).text() == 'Enabled' ? '1' : '0';
+				$.ajax(  
+		        	{
+			            type : 'PUT',    
+			            contentType : 'application/json',    
+			            url : '/job/' + jobId + "/status?jobStatus=" + jobStatus,    
+			            processData : false,    
+			            dataType : 'json',    
+			            success : function(result)   
+			            {    
+			                $("tbody tr").remove();
+			                
+			                buildTable(result);
+			            },    
+			            error : function()   
+			            {    
+			                console.log('Err...');    
+			            }    
+		        });    
+			});
+			
+			$("body").on("click", ".nextTimeHref", function() {
+				var jobId = $(this).parent().find("a").attr('rel');
+				$(this).parent().append($('<input type="text" value="' + $(this).text() + '" ><br/><a href="javascript:void(0)" class="updateLink" rel="'
+							+ jobId + '">Apply</a>'));
+				$(this).hide();
+			});
+			
+			$("body").on("click", ".updateLink", function() {
+				var jobId = $(this).attr("rel");
+				var date = $(this).parent().find("input[type=text]").val();
+				var $self = $(this);
+				var $a = $self.parent().find("a[class=nextTimeHref]");
+				$a.text(date);
+				
+				$.ajax(  
+		        	{
+			            type : 'PUT',    
+			            contentType : 'application/json',    
+			            url : '/job/' + jobId + "/date?date=" + date,    
+			            processData : false,    
+			            dataType : 'json',       
+			            success : function(result)   
+			            {    
+			            	$self.parent().find("input").remove();
+			            	$a.show();
+			            	$self.remove();			            	
+			            },    
+			            error : function()   
+			            {    
+			                console.log('Err...');    
+			            }    
+		        });    
+			});
+		});
+		
+		function buildTable(data) {
+			if(Array.isArray(data) && data.length>0) {
+            	var $tbody = $('tbody');
+            	var template;
+            	$.each(data, function(idx, obj) {
+            		template = '<tr><td>' + obj.jobName + '</td>'
+						+ '<td><a class="stateHref" href="javascript:void(0)" rel="' + obj.jobId + '">' + (obj.jobStatus=='1' ? 'Enabled' : 'Disabled') + '</a></td>'
+						+ '<td>Schedule</td>'
+						+ '<td><a class="nextTimeHref" href="javascript:void(0)" rel="' + obj.jobId + '">' + obj.nextTime + '</a></td>'
+						+ '<td>' + obj.previousTime + '</td>'
+						+ '</tr>';
+					$tbody.append(template);
+                });
+            }
+		}
+	</script>
+</body>
+</html>
