@@ -1,0 +1,20 @@
+server:
+  port: 8080
+  
+management:
+  server:
+    port: 8088 # actuator管理端口调整成8088
+    servlet:
+      context-path:  # actuator的访问路径
+  endpoint:
+    shutdown:
+      enabled: true # 启用接口关闭Spring Boot
+  endpoints:
+    web:
+      exposure:
+        include: "*" # 默认只暴露 info 和 health 接口，使用 * 暴露所有接口 (* 在yaml 文件属于关键字)
+      
+info:
+    app:
+        name: spring-boot-actuator
+        version: 1.0.0        
