@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>File Upload</title>
+	</head>
+	
+	<body>
+		<h1>Spring Boot single file upload </h1>
+		<form method="POST" action="/upload" enctype="multipart/form-data">
+			<input type="file" name="file" /><br/><br/>
+			<input type="submit" value="Submit" />
+		</form><br/>
+		
+		<h1>Spring Boot multiple file upload </h1>
+		<form method="POST" action="/multiupload" enctype="multipart/form-data">
+			<input type="file" name="file" /><br/><br/>
+			<input type="file" name="file" /><br/><br/>
+			<input type="file" name="file" /><br/><br/>
+			<input type="submit" value="Submit" />
+		</form><br/>
+	</body>
+</html>
