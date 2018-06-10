@@ -11,8 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.johnfnash.learn.domain.User;
-import com.johnfnash.learn.domain.UserRepository;
-import com.johnfnash.learn.service.ArticleService;
+import com.johnfnash.learn.repository.UserRepository;
 import com.johnfnash.learn.service.UserService;
 
 @RunWith(SpringRunner.class)
@@ -23,9 +22,6 @@ public class SpringDataJpaApplicationTests {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private ArticleService artcileService;
 	
 	@Test
 	public void testBaseQuery() {
@@ -75,12 +71,6 @@ public class SpringDataJpaApplicationTests {
 		userService.modifyByIdAndUserId("ca", 1L);
 		//userRepository.deleteByUserId(2L);
 		userService.deleteByUserId(2L);
-	}
-	
-	@Test
-	public void testMultipleTableQuery() {
-		Pageable pageable = PageRequest.of(0, 1);
-		artcileService.findAll(pageable);
 	}
 
 }

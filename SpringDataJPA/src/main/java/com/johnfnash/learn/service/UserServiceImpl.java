@@ -5,7 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.johnfnash.learn.domain.UserRepository;
+import com.johnfnash.learn.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
