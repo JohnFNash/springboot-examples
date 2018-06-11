@@ -65,6 +65,9 @@ public class QuartzTests {
 	public void testUpdateCronExpression() {
 		QuartzJobBean job = moduleService.getOne(18L);
 		try {			
+			job.setJobStatus(QuartzJobBean.STATUS_RUNNING); //确保测试时会启动该job
+			taskService.addJob(job);
+			
 			Thread.sleep(11000);
 			job.setCronExpression("*/5 * * * * ?");
 			taskService.updateCronExpression(job);
