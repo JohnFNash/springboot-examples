@@ -25,6 +25,7 @@ public class IndexController {
 	
 	@GetMapping("/user/{id}")
 	public User findUserById(@PathVariable("id") Long id) {
+		System.out.println(userService.findUserById(id));
 		User user = userService.findUserById(id);
 		return user;
 	}
