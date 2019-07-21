@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.johnfnash.learn.shiro.system.mapper.SysUserMapper">
+	
+   <select id="findAll" resultType="com.johnfnash.learn.shiro.system.entity.SysUser">
+   		select * 
+   		from T_SYS_USER
+		where STATE != 3 
+		<if test="req.userName != null and req.userName != ''">
+   			and USER_NAME like #{req.userName}
+   		</if>
+   </select>
+   
+</mapper>

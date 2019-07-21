@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.johnfnash.learn.shiro.system.mapper.SysRoleMapper">
+	
+   <select id="findRolesByUserId" resultType="String">
+   		select r.ID from T_SYS_ROLE r
+		join T_SYS_USER_ROLE_REL rel on rel.ROLE_ID = r.ID
+		where r.STATE = 1 and rel.USER_ID = #{userId}	
+   </select>
+   
+</mapper>

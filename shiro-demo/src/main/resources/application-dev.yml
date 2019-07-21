@@ -1,0 +1,38 @@
+server:
+  port: 8081
+  tomcat:
+    accesslog:
+      buffered: true
+      directory: ../logs
+      enabled: true
+      file-date-format: .yyyy-MM-dd
+      pattern: common
+      prefix: access_log
+      rename-on-rotate: false
+      request-attributes-enabled: false
+      rotate: true
+      suffix: .log
+
+# 数据源
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@ip:port:SID
+    username: your_username
+    password: your_password
+
+# 登录
+auth:
+  adminSessionExpiresInSec: 7200
+
+apiDoc:
+  enable: true
+
+#mybatisPlus
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  typeAliasesPackage: com.johnfnash.learn.shiro.system.entity
+  configuration:
+    # org.apache.ibatis.logging.nologging.NoLoggingImpl
+    # org.apache.ibatis.logging.slf4j.Slf4jImpl
+    # org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
