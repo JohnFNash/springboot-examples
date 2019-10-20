@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.johnfnash.redis.domain.Info;
 import com.johnfnash.redis.domain.User;
 import com.johnfnash.redis.service.UserService;
 
@@ -25,7 +24,6 @@ public class IndexController {
 	
 	@GetMapping("/user/{id}")
 	public User findUserById(@PathVariable("id") Long id) {
-		System.out.println(userService.findUserById(id));
 		User user = userService.findUserById(id);
 		return user;
 	}
@@ -33,11 +31,6 @@ public class IndexController {
 	@PutMapping("/upuser/{id}")
     public User upuser(@PathVariable("id") Long id) {  
         return userService.upuser(id);  
-    }  
-  
-    @GetMapping("/info/{id}")  
-    public Info findInfoById(@PathVariable("id") Long id) {  
-        return userService.findInfoById(id);  
     }  
   
     @PutMapping("/user/{id}/{name}")  

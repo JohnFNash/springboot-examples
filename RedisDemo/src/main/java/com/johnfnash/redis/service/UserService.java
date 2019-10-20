@@ -2,7 +2,6 @@ package com.johnfnash.redis.service;
 
 import java.util.List;
 
-import com.johnfnash.redis.domain.Info;
 import com.johnfnash.redis.domain.User;
 
 public interface UserService {
@@ -10,8 +9,6 @@ public interface UserService {
 	List<User> list();  
 	  
     User findUserById(Long id);  
-  
-    Info findInfoById(Long id);  
   
     void update(User user);  
   
