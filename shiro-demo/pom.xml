@@ -20,7 +20,7 @@
 		<druid.version>1.1.10</druid.version>
 		<oracle.version>11.2.0.3</oracle.version>
 		<swagger.version>2.7.0</swagger.version>
-		<shiro.version>1.4.0</shiro.version>
+		<shiro.version>1.7.1</shiro.version>
 		<mybatis.plus.version>3.1.0</mybatis.plus.version>
 	</properties>
 
